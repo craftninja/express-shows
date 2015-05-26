@@ -242,3 +242,83 @@
     ```
 
   * Restart server, verify in browser, commit all changes
+1. User can update shows
+  * Add edit button to show's show page
+
+    ```
+    div(class="page-header")
+      a(href='/shows/' + show.id + '/edit' class='btn btn-success pull-right') Edit show
+      h1= show.title
+    ```
+
+  * Add edit route
+
+    ```
+    router.get('/:id/edit', function(req, res, next) {
+      Show.findOne({_id: req.params.id}, function(err, show) {
+        if (err) return console.log(err);
+        res.render('shows/edit', {show: show});
+      });
+    });
+    ```
+
+  * Add edit view
+
+    ```
+    extends ../layout
+
+    block content
+
+      h1(class="page-header") Edit #{show.title}
+
+      ol(class="breadcrumb")
+        li
+          a(href="/shows") My Shows
+        li
+          a(href="/shows/" + show.id)= show.title
+        li(class="active") Edit
+
+      form(action='/shows/' + show.id method='post' class="form-horizontal")
+
+        div(class="form-group")
+          label(class="col-sm-2 control-label") Title
+          div(class="col-sm-5")
+            input(type='text' name='show[title]' value='#{show.title}' class="form-control")
+
+        div(class="form-group")
+          label(class="col-sm-2 control-label") Number of Seasons
+          div(class="col-sm-5")
+            input(type='number' name='show[seasons]' value='#{show.seasons}' class="form-control")
+
+        div(class="form-group")
+          div(class="col-sm-offset-2 col-sm-5")
+            div(class="checkbox")
+            label Have you watched this show?
+              if show.watched
+                input(type='checkbox' name='show[watched]' checked='#{show.watched}' class="form-control")
+              else
+                input(type='checkbox' name='show[watched]' class="form-control")
+
+        div(class="form-group")
+          div(class="col-sm-offset-2 col-sm-10")
+            input(type='submit' name='commit' value='Update Show' class="btn btn-success")
+    ```
+
+  * Add update route
+
+    ```
+    router.post('/:id', function(req, res, next) {
+      Show.findOne({_id: req.params.id}, function(err, show) {
+        if (err) return console.log(err);
+        show.title = req.body['show[title]'];
+        show.seasons = req.body['show[seasons]'];
+        show.watched = req.body['show[watched]'];
+        show.save(function (err, show) {
+          if (err) return console.error(err);
+          res.redirect('/shows/' + show.id);
+        })
+      });
+    });
+    ```
+
+  * Restart server, verify in browser, commit all changes

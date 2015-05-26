@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+
+  h1(class="page-header") Edit #{show.title}
+
+  ol(class="breadcrumb")
+    li
+      a(href="/shows") My Shows
+    li
+      a(href="/shows/" + show.id)= show.title
+    li(class="active") Edit
+
+  form(action='/shows/' + show.id method='post' class="form-horizontal")
+
+    div(class="form-group")
+      label(class="col-sm-2 control-label") Title
+      div(class="col-sm-5")
+        input(type='text' name='show[title]' value='#{show.title}' class="form-control")
+
+    div(class="form-group")
+      label(class="col-sm-2 control-label") Number of Seasons
+      div(class="col-sm-5")
+        input(type='number' name='show[seasons]' value='#{show.seasons}' class="form-control")
+
+    div(class="form-group")
+      div(class="col-sm-offset-2 col-sm-5")
+        div(class="checkbox")
+        label Have you watched this show?
+          if show.watched
+            input(type='checkbox' name='show[watched]' checked='#{show.watched}' class="form-control")
+          else
+            input(type='checkbox' name='show[watched]' class="form-control")
+
+    div(class="form-group")
+      div(class="col-sm-offset-2 col-sm-10")
+        input(type='submit' name='commit' value='Update Show' class="btn btn-success")

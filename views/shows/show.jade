@@ -1,7 +1,9 @@
 extends ../layout
 
 block content
-  h1(class="page-header")= show.title
+  div(class="page-header")
+    a(href='/shows/' + show.id + '/edit' class='btn btn-success pull-right') Edit show
+    h1= show.title
 
   ol(class="breadcrumb")
     li
