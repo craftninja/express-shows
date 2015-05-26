@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1(class="page-header") My Shows
+
+  ul(class="list-group")
+    each show in shows
+      if show.watched
+        li(class="list-group-item") #{show.title} (Seasons: #{show.seasons}) - watched
+      else
+        li(class="list-group-item") #{show.title} (Seasons: #{show.seasons}) - unwatched
