@@ -10,6 +10,22 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/new', function(req, res, next) {
+  res.render('shows/new');
+});
+
+router.post('/', function(req, res, next) {
+  show = new Show({
+    title: req.body['show[title]'],
+    seasons: req.body['show[seasons]'],
+    watched: req.body['show[watched]']
+  });
+  show.save(function (err, show) {
+    if (err) return console.error(err);
+    res.redirect('shows/' + show.id);
+  });
+});
+
 router.get('/:id', function(req, res, next) {
   Show.findOne({_id: req.params.id}, function(err, show) {
     if (err) return console.log(err);

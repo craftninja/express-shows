@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+
+  h1(class="page-header") New Show
+
+  ol(class="breadcrumb")
+    li
+      a(href="/shows") My Shows
+    li(class="active") New Show
+
+  form(action='/shows' method='post' class="form-horizontal")
+
+    div(class="form-group")
+      label(class="col-sm-2 control-label") Title
+      div(class="col-sm-5")
+        input(type='text' name='show[title]' class="form-control")
+
+    div(class="form-group")
+      label(class="col-sm-2 control-label") Number of Seasons
+      div(class="col-sm-5")
+        input(type='number' name='show[seasons]' class="form-control")
+
+    div(class="form-group")
+      div(class="col-sm-offset-2 col-sm-5")
+        div(class="checkbox")
+        label Have you watched this show?
+          input(type='checkbox' name='show[watched]' class="form-control")
+
+    div(class="form-group")
+      div(class="col-sm-offset-2 col-sm-10")
+        input(type='submit' name='commit' value='Add Show' class="btn btn-success")

@@ -1,7 +1,9 @@
 extends ../layout
 
 block content
-  h1(class="page-header") My Shows
+  div(class="page-header")
+    a(href='shows/new' class="btn btn-success pull-right") Add New Show
+    h1 My Shows
 
   ul(class="list-group")
     each show in shows

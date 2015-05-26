@@ -171,3 +171,74 @@
     ```
 
   * Check in browser (after restarting the server) and commit
+1. User can add new shows
+  * Add a "New Show" button to index
+
+    ```
+    div(class="page-header")
+      a(href='shows/new' class="btn btn-success pull-right") Add New Show
+      h1 My Shows
+    ```
+
+  * Add a new route to `routes/shows.js`
+
+    ```
+    router.get('/new', function(req, res, next) {
+      res.render('shows/new');
+    });
+    ```
+
+  * Add view `view/shows/new.jade`
+
+    ```
+    extends ../layout
+
+    block content
+
+      h1(class="page-header") New Show
+
+      ol(class="breadcrumb")
+        li
+          a(href="/shows") My Shows
+        li(class="active") New Show
+
+      form(action='/shows' method='post' class="form-horizontal")
+
+        div(class="form-group")
+          label(class="col-sm-2 control-label") Title
+          div(class="col-sm-5")
+            input(type='text' name='show[title]' class="form-control")
+
+        div(class="form-group")
+          label(class="col-sm-2 control-label") Number of Seasons
+          div(class="col-sm-5")
+            input(type='number' name='show[seasons]' class="form-control")
+
+        div(class="form-group")
+          div(class="col-sm-offset-2 col-sm-5")
+            div(class="checkbox")
+            label Have you watched this show?
+              input(type='checkbox' name='show[watched]' class="form-control")
+
+        div(class="form-group")
+          div(class="col-sm-offset-2 col-sm-10")
+            input(type='submit' name='commit' value='Add Show' class="btn btn-success")
+    ```
+
+  * Add update route
+
+    ```
+    router.post('/', function(req, res, next) {
+      show = new Show({
+        title: req.body['show[title]'],
+        seasons: req.body['show[seasons]'],
+        watched: req.body['show[watched]']
+      });
+      show.save(function (err, show) {
+        if (err) return console.error(err);
+        res.redirect('shows/' + show.id);
+      });
+    });
+    ```
+
+  * Restart server, verify in browser, commit all changes
