@@ -6,6 +6,8 @@ block content
   ul(class="list-group")
     each show in shows
       if show.watched
-        li(class="list-group-item") #{show.title} (Seasons: #{show.seasons}) - watched
+        li(class="list-group-item")
+          a(href="shows/" + show.id) #{show.title} (Seasons: #{show.seasons}) - watched
       else
-        li(class="list-group-item") #{show.title} (Seasons: #{show.seasons}) - unwatched
+        li(class="list-group-item")
+          a(href="shows/" + show.id) #{show.title} (Seasons: #{show.seasons}) - unwatched

@@ -128,3 +128,46 @@
     WriteResult({ "nInserted" : 1 })
     ```
   * Commit
+1. User can see a show's show page
+  * Add link to index
+
+    ```
+    if show.watched
+      li(class="list-group-item")
+        a(href="shows/" + show.id) #{show.title} (Seasons: #{show.seasons}) - watched
+    else
+      li(class="list-group-item")
+        a(href="shows/" + show.id) #{show.title} (Seasons: #{show.seasons}) - unwatched
+    ```
+
+  * Add route to `routes/shows.js`
+
+    ```
+    router.get('/:id', function(req, res, next) {
+      Show.findOne({_id: req.params.id}, function(err, show) {
+        if (err) return console.log(err);
+        res.render('shows/show', {show: show});
+      });
+    });
+    ```
+
+  * Add view `views/shows/show.jade`
+
+    ```
+    extends ../layout
+
+    block content
+      h1(class="page-header")= show.title
+
+      ol(class="breadcrumb")
+        li
+          a(href="/shows") My Shows
+        li(class="active")= show.title
+
+      if show.watched
+        p Seasons: #{show.seasons} - watched
+      else
+        p Seasons: #{show.seasons} - unwatched
+    ```
+
+  * Check in browser (after restarting the server) and commit

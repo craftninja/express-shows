@@ -10,4 +10,11 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/:id', function(req, res, next) {
+  Show.findOne({_id: req.params.id}, function(err, show) {
+    if (err) return console.log(err);
+    res.render('shows/show', {show: show});
+  });
+});
+
 module.exports = router;

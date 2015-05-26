@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1(class="page-header")= show.title
+
+  ol(class="breadcrumb")
+    li
+      a(href="/shows") My Shows
+    li(class="active")= show.title
+
+  if show.watched
+    p Seasons: #{show.seasons} - watched
+  else
+    p Seasons: #{show.seasons} - unwatched
