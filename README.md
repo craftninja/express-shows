@@ -322,3 +322,25 @@
     ```
 
   * Restart server, verify in browser, commit all changes
+1. User can delete shows
+  * Add a delete button to show's edit page
+
+    ```
+    div(class="page-header")
+      a(href='/shows/' + show.id + '/delete' class="btn btn-danger pull-right") Delete show
+      h1 Edit #{show.title}
+    ```
+
+  * Add a delete route
+
+    ```
+    router.get('/:id/delete', function(req, res, next) {
+      Show.findOne({_id: req.params.id}, function(err, show) {
+        if (err) return console.log(err);
+        show.remove();
+        res.redirect('/shows');
+      });
+    });
+    ```
+
+  * Restart server, verify in browser, commit all changes

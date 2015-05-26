@@ -53,4 +53,12 @@ router.post('/:id', function(req, res, next) {
   });
 });
 
+router.get('/:id/delete', function(req, res, next) {
+  Show.findOne({_id: req.params.id}, function(err, show) {
+    if (err) return console.log(err);
+    show.remove();
+    res.redirect('/shows');
+  });
+});
+
 module.exports = router;

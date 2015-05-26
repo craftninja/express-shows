@@ -1,8 +1,9 @@
 extends ../layout
 
 block content
-
-  h1(class="page-header") Edit #{show.title}
+  div(class="page-header")
+    a(href='/shows/' + show.id + '/delete' class="btn btn-danger pull-right") Delete show
+    h1 Edit #{show.title}
 
   ol(class="breadcrumb")
     li
